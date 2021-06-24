@@ -23,7 +23,6 @@ const Membership = () => {
         address: '',
         city: '',
         pincode: '',
-
     }
     const [formState, setFormState] = useState(deafultFormData);
     const [newMembershipData, setNewMembershipData] = useState({
@@ -68,6 +67,7 @@ const Membership = () => {
             setErrors(newErrors);
             if (formState.gender === '') alert('Please select your gender!')
         } else {
+            console.log(formState);
             // Make the API call to backend here.
             setFormState(deafultFormData);
         }
@@ -104,7 +104,8 @@ const Membership = () => {
         if (!isValidPassword) newErrors.password = 'Cannot be blank or at least have 1 special character!'
         else if (password.length > 18) newErrors.password = 'Password is too long!'
         // address errors
-        if (address.length > 150) newErrors.address = 'Address is too long!';
+        if (!address || address === '') newErrors.address = 'Cannot be blank!';
+        else if (address.length > 150) newErrors.address = 'Address is too long!';
         // pincode errors
         var isValidPincode = /^(\d{4}|\d{6})$/.test(pincode);
         if(!isValidPincode) newErrors.pincode = 'Enter a valid pincode!';
@@ -120,7 +121,7 @@ const Membership = () => {
     useEffect(() => {
         if (membershipPlan !== null && membershipService !== null) {
             let services = [];
-            services = membershipService.includes('-') ? membershipService.split('-') : membershipService;
+            services = membershipService.includes('-') ? membershipService.split('-') : [membershipService];
             setFormState({
                 ...formState,
                 plan: membershipPlan,
@@ -140,7 +141,7 @@ const Membership = () => {
                             <hr />
                             <Form onSubmit={handleNewMembershipSubmit}>
                                 <Form.Row>
-                                    <Form.Group as={Col} className='d-flex justify-content-between align-items-center'>
+                                    <Form.Group as={Col} className='d-flex justify-content-around align-items-center'>
                                         <h6>Select a Plan</h6>
                                         <DropdownButton
                                             title={newMembershipData.plan}
@@ -155,7 +156,7 @@ const Membership = () => {
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group as={Col}
-                                        className="d-flex justify-content-between">
+                                        className="d-flex justify-content-around">
                                         <Form.Label><h6>Service</h6></Form.Label>
                                         <Form.Check
                                             type="checkbox"
