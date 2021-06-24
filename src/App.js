@@ -14,6 +14,7 @@ import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home';
 import Membership from './components/Membership/Membership';
 import About from './components/About/About';
+import Payment from './components/Payment/Payment';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route exact path='/home' component={Home} />
           <Route exact path='/membership' component={Membership} />
           <Route exact path='/about' component={About} />
+          <Route exact path='/payment' component={Payment} />
         </Switch>
       </div>
     </Router>

@@ -70,6 +70,7 @@ const Membership = () => {
             console.log(formState);
             // Make the API call to backend here.
             setFormState(deafultFormData);
+            history.push(`/payment`);
         }
     }
     const handleChange = event => {
